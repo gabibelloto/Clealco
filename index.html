@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Performance</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica', sans-serif;
+            background-color: #FFFFFF;
+            padding-top: 50px;
+            padding-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            background-color: #FFCA08;
+            width: 100%;
+            height: 50px;
+            text-align: left;
+            padding-left: 10px;
+            line-height: 30px;
+            color: #000000;
+            font-size: 10px;
+            z-index: 9999; /* Define um valor alto de z-index para o cabeçalho */
+        }
+
+        #footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background-color: #A80000;
+            width: 100%;
+            height: 50px;
+            text-align: right;
+            padding-right: 10px;
+            padding-left: 10px;
+            color: #FFFFFF;
+            font-size: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        #header img {
+            width: 65px;
+            height: auto;
+            margin-right: 8px;
+        }
+
+        #footer img {
+            width: 55px;
+            height: auto;
+            margin-right: 8px;
+            margin: 0;
+        }
+
+        #footer h1 {
+        margin: 0; /* Remove margem padrão do h1 */
+        text-align: right; /* Alinha o texto à direita */
+        flex-grow: 1; /* Faz o texto ocupar o espaço disponível restante */
+        font-size: 10px;
+        margin-right: 20px;
+        font-family: 'Helvetica', sans-serif;
+        }
+
+        .option-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-right: auto;
+            margin-left: auto;
+            padding: 40px;
+
+        }
+
+        .option-button {
+            background-color: #D1E8B2;
+            border: 2px solid #B1C597;
+            width: 150px;
+            height: 30px;
+            margin-top: 70px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+            color: #000000;
+            font-family: 'Helvetica', sans-serif;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            flex-direction: column;
+            position: relative;
+            border-radius: 4px;
+        }
+
+        .option-button img {
+            width: 50px;
+            height: auto;
+            position: absolute;
+            top: -55px;
+        }
+
+        .option-button:nth-child(1) img,
+        .option-button:nth-child(2) img {
+            margin-top: -12px; /* Ajuste a margem superior conforme necessário */
+        }
+
+        .form-container {
+            padding: 20px;
+            width: 80%;
+            max-width: 400px; /* Defina uma largura máxima para o contêiner do formulário */
+            margin: 10px auto; /* Define margens automáticas para centralizar o contêiner */
+            text-align: center; /* Alinha o texto dos elementos do formulário ao centro */
+        }
+
+        /* Adiciona um espaço de 10px acima do botão de calcular */
+        .form-container button[type="button"] {
+            margin-top: 20px;
+        }
+
+        .form-container h2 {
+            margin-top: 0;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-container input[type="number"],
+        .form-container select {
+            width: 100%; /* Define a largura dos campos de entrada e seleção como 100% do contêiner pai */
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .form-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 80%;
+        }
+
+        .result-container {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 600px) {
+    /* Adicione regras de estilo específicas para telas pequenas (ex: smartphones) */
+    .form-container {
+        width: 90%; /* Ajuste a largura máxima para telas pequenas */
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="header">
+        <img src="	https://www.clealco.com.br/controle/arquivo/Site%20Linha%20do%20tempo.jpg" alt="Clealco">
+        <h1>Calculadora de Performance</h1>
+    </div>
+
+    <div class="option-buttons">
+        <div class="option-button" onclick="mostrarOpcao('formacaoLavoura')">
+            Formação de lavoura<br>
+            <img src="https://i.postimg.cc/vTc7qgw3/trator.png" alt="Formação de Lavoura">
+        </div>
+        <div class="option-button" onclick="mostrarOpcao('tratos')">
+            Tratos<br>
+            <img src="https://live.staticflickr.com/65535/53625917648_37baf2f281.jpg" alt="Tratos">
+        </div>
+        <div class="option-button" onclick="mostrarOpcao('colheita')">
+            Colheita<br>
+            <img src="	https://live.staticflickr.com/65535/53625917088_e835135377.jpg" alt="Colheita">
+        </div>
+        <div class="option-button" onclick="mostrarOpcao('transporte')">
+            Transporte<br>
+            <img src="https://i.postimg.cc/JzJDz3Qb/transporte-rodoviario-de-mercadorias.png" alt="Transporte">
+        </div>
+    </div>
+
+    <div class="form-container" id="formacaoLavoura" style="display: none;">
+        <!-- Conteúdo do formulário de Formação de lavoura -->
+        <h2>Formação de lavoura</h2>
+        <form id="formacaoLavouraForm">
+            <label for="larguraImplemento">Largura do Implemento (metros):</label>
+            <input type="number" id="larguraImplemento" step="any" required><br>
+
+            <label for="velocidadeImplemento">Velocidade (km/h):</label>
+            <input type="number" id="velocidadeImplemento" step="any" required><br>
+
+            <label for="horaEfetiva">Horas Efetivas:</label>
+            <input type="number" id="horaEfetiva" step="any" required><br>
+
+            <button type="button" onclick="calcularHectaresPorDia()">Calcular Hectares por Dia</button>
+        </form>
+
+        <div class="result-container" id="resultadoHectaresPorDia"></div>
+    </div>
+
+    <div class="form-container" id="tratos" style="display: none;">
+        <!-- Conteúdo do formulário de Tratos -->
+        <h2>Tratos</h2>
+        <form id="tratosForm">
+            <label for="larguraImplementoTratos">Largura do Implemento (metros):</label>
+            <input type="number" id="larguraImplementoTratos" step="any" required><br>
+
+            <label for="velocidadeTratos">Velocidade (km/h):</label>
+            <input type="number" id="velocidadeTratos" step="any" required><br>
+
+            <label for="horaEfetivaTratos">Horas Efetivas:</label>
+            <input type="number" id="horaEfetivaTratos" step="any" required><br>
+
+            <button type="button" onclick="calcularHectaresPorDiaTratos()">Calcular Hectares por Dia</button>
+        </form>
+
+        <div class="result-container" id="resultadoHectaresPorDiaTratos"></div>
+    </div>
+
+    <div class="form-container" id="colheita" style="display: none;">
+        <!-- Conteúdo do formulário de Colheita -->
+        <h2>Colheita</h2>
+        <form id="colheitaForm">
+            <label for="espacamento">Tipo de Espaçamento:</label>
+            <select id="espacamento">
+                <option value="1.5">Sulco Simples (1.5 m)</option>
+                <option value="2.4">Sulco Duplo (2.4 m)</option>
+                <option value="3">Simples Duplo (3 m)</option>
+            </select><br>
+
+            <label for="tch">TCH (toneladas de cana por hectare):</label>
+            <input type="number" id="tch" step="any" required><br>
+
+            <label for="velocidadeColheita">Velocidade (km/h):</label>
+            <input type="number" id="velocidadeColheita" step="any" required><br>
+
+            <label for="horaElevador">Horas Elevador:</label>
+            <input type="number" id="horaElevador" step="any" required><br>
+
+            <button type="button" onclick="calcularColheita()">Calcular Colheita</button>
+        </form>
+
+        <div class="result-container" id="resultadoColheita"></div>
+    </div>
+
+    <div class="form-container" id="transporte" style="display: none;">
+        <!-- Conteúdo do formulário de Transporte -->
+        <h2>Transporte</h2>
+        <form id="transporteForm">
+            <label for="usina">Unidade:</label>
+            <select id="usina">
+                <option value="Clementina">Clementina</option>
+                <option value="Queiroz">Queiroz</option>
+            </select><br>
+
+            <label for="raio">Raio (metros):</label>
+            <input type="number" id="raio" step="any" required><br>
+
+            <button type="button" onclick="calcularTransporte()">Calcular Transporte</button>
+        </form>
+
+        <div class="result-container" id="resultadoTransporte"></div>
+        <div class="result-container" id="resultadoPorTurno"></div> <!-- Novo resultado para mostrar o tempo por turno -->
+    </div>
+
+    <div id="footer">
+        <img src="	https://www.clealco.com.br/imagens/logo_clealco_n2.png" alt="Clealco2">
+        <h1>Desenvolvido por Melhoria Contínua</h1>
+    </div>
+
+    <script>
+        function mostrarOpcao(opcao) {
+            // Esconde todos os formulários
+            document.getElementById('formacaoLavoura').style.display = 'none';
+            document.getElementById('tratos').style.display = 'none';
+            document.getElementById('colheita').style.display = 'none';
+            document.getElementById('transporte').style.display = 'none';
+
+            // Mostra o formulário correspondente à opção escolhida
+            document.getElementById(opcao).style.display = 'block';
+        }
+
+        function calcularHectaresPorDia() {
+            var larguraImplemento = parseFloat(document.getElementById('larguraImplemento').value);
+            var velocidadeImplemento = parseFloat(document.getElementById('velocidadeImplemento').value);
+            var horaEfetiva = parseFloat(document.getElementById('horaEfetiva').value);
+
+            var hectaresPorDia = ((larguraImplemento * velocidadeImplemento) / 10) * horaEfetiva;
+            document.getElementById('resultadoHectaresPorDia').innerText = "Hectares por Dia: " + hectaresPorDia.toFixed(2);
+        }
+
+        function calcularHectaresPorDiaTratos() {
+            var larguraImplementoTratos = parseFloat(document.getElementById('larguraImplementoTratos').value);
+            var velocidadeTratos = parseFloat(document.getElementById('velocidadeTratos').value);
+            var horaEfetivaTratos = parseFloat(document.getElementById('horaEfetivaTratos').value);
+
+            var hectaresPorDiaTratos = ((larguraImplementoTratos * velocidadeTratos) / 10) * horaEfetivaTratos;
+            document.getElementById('resultadoHectaresPorDiaTratos').innerText = "Hectares por Dia: " + hectaresPorDiaTratos.toFixed(2);
+        }
+
+        function calcularColheita() {
+            var espacamento = parseFloat(document.getElementById('espacamento').value);
+            var tch = parseFloat(document.getElementById('tch').value);
+            var velocidadeColheita = parseFloat(document.getElementById('velocidadeColheita').value);
+            var horaElevador = parseFloat(document.getElementById('horaElevador').value);
+
+            var colheitabilidade = ((tch / (10 / espacamento)) * velocidadeColheita * horaElevador);
+            document.getElementById('resultadoColheita').innerText = "Tonelada por dia: " + colheitabilidade.toFixed(2);
+        }
+
+        function calcularTransporte() {
+            var usina = document.getElementById('usina').value;
+            var raio = parseFloat(document.getElementById('raio').value);
+
+            var tempoTotal = 0;
+            if (usina === "Clementina") {
+                tempoTotal = ((1440 / (((raio / 35) * 60) + ((raio / 25) * 60) + 25 + 35) * 70));
+            } else if (usina === "Queiroz") {
+                tempoTotal = ((1440 / (((raio / 30) * 60) + ((raio / 20) * 60) + 25 + 35) * 70));
+            }
+
+            document.getElementById('resultadoTransporte').innerText = "Tonelada total: " + tempoTotal.toFixed(2);
+
+            // Novo cálculo para mostrar o tempo por turno
+            var tempoPorTurno = tempoTotal / 3;
+            document.getElementById('resultadoPorTurno').innerText = "Tonelada por Turno: " + tempoPorTurno.toFixed(2);
+        }
+    </script>
+</body>
+</html>
